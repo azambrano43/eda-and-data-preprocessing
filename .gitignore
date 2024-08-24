@@ -1,5 +1,8 @@
-# Ignore csv files
+# Ignore all csv files
 *.csv
+
+# Except flights.csv
+!flights.csv
 
 # Ignore excel files
 *.xlsx

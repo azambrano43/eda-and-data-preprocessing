@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import warnings
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 def convert_columns(df: pd.DataFrame, columns: list, dtype: str) -> pd.DataFrame:
@@ -89,6 +90,39 @@ def encode_columns(df: pd.DataFrame, columns: list, encoding_type: str) -> pd.Da
     
     return df_copy
 
+def scale_columns(df: pd.DataFrame, columns: list, method: str = 'standard') -> pd.DataFrame:
+    """
+    Scales the specified columns in the DataFrame using the chosen scaling method.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame.
+    columns (list): List of columns to be scaled.
+    method (str): Scaling method to use. Options are 'standard' (StandardScaler) or 'minmax' (MinMaxScaler). Default is 'standard'.
+
+    Returns:
+    pd.DataFrame: DataFrame with scaled columns.
+    """
+    # Check if all specified columns are in the DataFrame
+    missing_cols = [col for col in columns if col not in df.columns]
+    if missing_cols:
+        raise ValueError(f"Columns not found in DataFrame: {', '.join(missing_cols)}")
+    
+    # Create a copy of the DataFrame to avoid modifying the original data
+    scaled_df = df.copy()
+    
+    # Choose the scaler based on the method
+    if method == 'standard':
+        scaler = StandardScaler()
+    elif method == 'minmax':
+        scaler = MinMaxScaler()
+    else:
+        raise ValueError("Invalid scaling method. Choose 'standard' or 'minmax'.")
+    
+    # Apply scaling
+    scaled_df[columns] = scaler.fit_transform(scaled_df[columns])
+    
+    return scaled_df
+
 def remove_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     """
     Removes specified columns from the DataFrame without modifying the original.
@@ -137,7 +171,8 @@ def fill_missing_values(df: pd.DataFrame, columns: list, method: str) -> pd.Data
             col_dtype = df_copy[col].dtype
             
             if pd.api.types.is_string_dtype(col_dtype):
-                warnings.warn(f"Column '{col}' is of type string. Please encode string columns before using this function.")
+                warnings.warn(f"Column '{col}' is of type string. Null values have been filled as 'Unknown'.")
+                df_copy[col].fillna("Unknown", inplace=True)
                 continue
             
             if method == 'mean':
