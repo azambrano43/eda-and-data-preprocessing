@@ -171,7 +171,7 @@ def fill_missing_values(df: pd.DataFrame, columns: list, method: str) -> pd.Data
             col_dtype = df_copy[col].dtype
             
             if pd.api.types.is_string_dtype(col_dtype):
-                warnings.warn(f"Column '{col}' is of type string. Null values have been filled as 'Unknown'.")
+                print(f"Column '{col}' is of type string. Null values have been filled as 'Unknown'.")
                 df_copy[col].fillna("Unknown", inplace=True)
                 continue
             
