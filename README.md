@@ -18,9 +18,10 @@ To run the provided code, you'll need to have the following libraries installed:
 You can reproduce the analysis by following these steps:
 
 1. **Load data**: Place your data files in the `data/` folder.
-2. **Data exploration**: Run the notebooks in the `notebooks/` folder to perform EDA.
-3. **Data cleaning and transformation**: Use the scripts in `src/` to clean and transform the data.
-4. **Model training**: The focus here is on EDA and preprocessing, so you can use the cleaned data to build your own models.
+2. **Reference analysis**: The `reference_analysis.ipynb` notebook in the `notebooks/` folder provides a complete example of how to perform EDA and data preprocessing on the `flights.csv` dataset. Use it as a guide or reference for your own notebooks and datasets.
+3. **Data cleaning and transformation**: Use the scripts in the `src/` folder to clean and preprocess your data.
+4. **Model training**: This repository focuses on EDA and preprocessing; after preparing the data, you can proceed to build your own models.
+
 
 ## Contributions
 Contributions are welcome. If you have ideas or improvements, feel free to open a pull request or create an issue.

@@ -134,5 +134,7 @@ def plot_pairplot(df: pd.DataFrame, pairplot_columns: list, hue_column: str = No
     Returns:
     None
     """
-    sns.pairplot(df, hue=hue_column, height=3, vars=pairplot_columns, kind='scatter', plot_kws={'s': 20})
+
+    # Crear el pairplot con puntos más pequeños
+    sns.pairplot(df, hue=hue_column, height=3, vars=pairplot_columns, kind='scatter', plot_kws={'s': 15})
     plt.show()
